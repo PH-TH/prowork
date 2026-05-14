@@ -1386,7 +1386,8 @@ export function TradingPage() {
         ) : null}
       </Card>
 
-      <div className="flex gap-4 overflow-x-auto pb-2">
+      <div className="grid gap-4 2xl:grid-cols-[minmax(0,1fr)_minmax(340px,420px)]">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {visibleFundingAccounts.map((account, index) => {
           const metrics = accountMetricsMap.get(account.id);
           if (!metrics) return null;
@@ -1424,7 +1425,7 @@ export function TradingPage() {
                 }
               }}
               className={cn(
-                'relative min-w-[340px] cursor-pointer overflow-hidden rounded-2xl border bg-white p-5 text-slate-950 shadow-card transition-shadow hover:border-emerald-100 hover:shadow-lift',
+                'relative min-h-[404px] cursor-pointer overflow-hidden rounded-2xl border bg-white p-5 text-slate-950 shadow-card transition-shadow hover:border-emerald-100 hover:shadow-lift',
                 activeAccount?.id === account.id ? 'border-emerald-300 ring-4 ring-emerald-100' : accent.border,
               )}
             >
@@ -1511,7 +1512,53 @@ export function TradingPage() {
               </div>
             </motion.div>
           );
-        })}
+          })}
+        </div>
+
+        {activeAccount ? (() => {
+          const metrics = accountMetricsMap.get(activeAccount.id);
+          if (!metrics) return null;
+          return (
+            <Card hover={false} className="h-full border-emerald-100 bg-gradient-to-br from-white via-white to-emerald-50/60">
+              <div className="flex h-full flex-col">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge tone={activeAccount.status === 'Failed' ? 'red' : activeAccount.status === 'Passed' || activeAccount.status === 'Funded' ? 'green' : 'blue'}>{activeAccount.status}</Badge>
+                      <span className="font-inter text-[12px] font-bold text-slate-500">{activeAccount.provider} · {activeAccount.accountType}</span>
+                    </div>
+                    <h3 className="mt-3 font-inter text-[21px] font-extrabold leading-7 text-slate-950">{activeAccount.accountName}</h3>
+                    <p className="mt-1 font-kanit text-[13px] leading-5 text-slate-500">รีวิวบัญชีที่เลือก พร้อมตัวเลขจาก trade journal ปัจจุบัน</p>
+                  </div>
+                  <div className="flex shrink-0 gap-2">
+                    <Button variant="secondary" size="sm" icon={<Pencil size={14} />} onClick={() => openEditAccountModal(activeAccount)}>Edit</Button>
+                    <Button
+                      variant="secondary"
+                      size="icon"
+                      icon={<Info size={14} />}
+                      onClick={() => setAccountDetailOpen(true)}
+                      aria-label="Open account full view"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-5 grid gap-2 sm:grid-cols-2 2xl:grid-cols-1 min-[1780px]:grid-cols-2">
+                  {[
+                    ['Current Balance', money(activeAccount.currentBalance), 'blue'],
+                    ['Net After Fees', signedMoney(metrics.netAfterCost), metrics.netAfterCost >= 0 ? 'green' : 'red'],
+                    ['Journal PnL', signedMoney(metrics.netPnl), metrics.netPnl >= 0 ? 'green' : 'red'],
+                    ['Win Rate', `${metrics.winRate}%`, 'blue'],
+                  ].map(([label, value, tone]) => (
+                    <div key={label} className="rounded-xl border border-slate-200 bg-white/80 p-3 shadow-[0_8px_20px_rgba(15,23,42,0.03)]">
+                      <p className="font-inter text-[11px] font-bold text-slate-500">{label}</p>
+                      <p className={cn('mt-1 font-inter text-[20px] font-extrabold leading-7', tone === 'green' ? 'text-emerald-600' : tone === 'red' ? 'text-red-500' : 'text-slate-900')}>{value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Card>
+          );
+        })() : null}
       </div>
 
       {false && (
@@ -1786,7 +1833,7 @@ export function TradingPage() {
         return (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} className="grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1.45fr)_340px]">
             <div className="space-y-4">
-              <Card hover={false}>
+              <Card hover={false} className="hidden">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
@@ -1798,7 +1845,7 @@ export function TradingPage() {
                   </div>
                   <div className="flex gap-2">
                     <Button variant="secondary" size="sm" icon={<Pencil size={14} />} onClick={() => openEditAccountModal(account)}>Edit</Button>
-                    <Button variant="secondary" size="sm" icon={<Info size={14} />} onClick={() => setAccountDetailOpen(true)}>Full View</Button>
+                    <Button variant="secondary" size="icon" icon={<Info size={14} />} onClick={() => setAccountDetailOpen(true)} aria-label="Open account full view" />
                   </div>
                 </div>
 
