@@ -10,6 +10,7 @@ export const NAV_ITEMS: Array<{ id: PageKey; label: string }> = [
   { id: 'journals', label: 'Journals' },
   { id: 'trading', label: 'Trading+' },
   { id: 'backtest', label: 'Backtest' },
+  { id: 'investment', label: 'Investment' },
   { id: 'settings', label: 'Settings' },
 ];
 

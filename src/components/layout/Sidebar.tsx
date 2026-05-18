@@ -1,4 +1,4 @@
-import { BarChart3, BookOpen, BriefcaseBusiness, Gauge, HeartPulse, LockKeyhole, PenLine, Settings } from 'lucide-react';
+import { BarChart3, BookOpen, BriefcaseBusiness, Gauge, HeartPulse, LockKeyhole, PenLine, PieChart, Settings } from 'lucide-react';
 import { NAV_ITEMS } from '../../lib/constants';
 import { useAppStore } from '../../stores/appStore';
 import type { PageKey } from '../../types/dashboard';
@@ -13,6 +13,7 @@ const icons: Record<PageKey, typeof Gauge> = {
   journals: PenLine,
   trading: BarChart3,
   backtest: BookOpen,
+  investment: PieChart,
   settings: Settings,
 };
 

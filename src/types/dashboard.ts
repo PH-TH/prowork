@@ -1,4 +1,4 @@
-export type PageKey = 'dashboard' | 'work' | 'habit' | 'learning' | 'finance' | 'journals' | 'trading' | 'backtest' | 'settings';
+export type PageKey = 'dashboard' | 'work' | 'habit' | 'learning' | 'finance' | 'journals' | 'trading' | 'backtest' | 'investment' | 'settings';
 
 export interface DashboardKpi {
   id: string;

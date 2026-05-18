@@ -6,6 +6,7 @@ import { HabitPage } from './pages/HabitPage';
 import { JournalsPage } from './pages/JournalsPage';
 import { LearningPage } from './pages/LearningPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { InvestmentPage } from './pages/InvestmentPage';
 import { TradingPage } from './pages/TradingPage';
 import { WorkPage } from './pages/WorkPage';
 import { useAppStore } from './stores/appStore';
@@ -19,6 +20,7 @@ const pages = {
   journals: <JournalsPage />,
   trading: <TradingPage />,
   backtest: <BacktestPage />,
+  investment: <InvestmentPage />,
   settings: <SettingsPage />,
 };
 

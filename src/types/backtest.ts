@@ -1,6 +1,19 @@
 export type BacktestMarketCondition = 'Trending' | 'Range' | 'Breakout' | 'News' | 'Low Volatility';
 export type BacktestStatus = 'Draft' | 'In Review' | 'Validated' | 'Rejected';
 
+export interface TradeRecord {
+  id: string;
+  date: string;
+  symbol: string;
+  direction: 'Long' | 'Short';
+  setup: string;
+  result_r: number;
+  mfe_r: number;
+  mae_r: number;
+  rule_score: number;
+  max_rule_score: number;
+}
+
 export interface BacktestTrade {
   id: string;
   sessionId: string;
